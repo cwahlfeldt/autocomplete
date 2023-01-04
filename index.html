@@ -6,9 +6,17 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="autocomplete.js"></script>
+    <script type="module" async src="autocomplete.js"></script>
+<!--    <script type="module" async src="https://cdn.jsdelivr.net/gh/cwahlfeldt/autocomplete/autocomplete.js"></script>-->
 </head>
 <body>
-    <auto-complete options="Ok,Cool,Cool,Another"></auto-complete>
+    <auto-complete options='
+    [
+        {"label": "ALabel", "url": "https://google.com"},
+        {"label": "ALabel", "url": "https://google.com"},
+        {"label": "BLabel", "url": "https://google.com"},
+        {"label": "CLabel", "url": "https://google.com"}
+    ]
+    '></auto-complete>
 </body>
 </html>
