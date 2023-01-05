@@ -38,8 +38,8 @@ function autocomplete(el, options) {
     let currentFocus;
     let i = 0;
     const shadow = el.shadowRoot;
-    const input = shadow.querySelector('#myInput');
-    const openButton = shadow.querySelector('#openButton')
+    const input = shadow.querySelector('[data-input]');
+    const openButton = shadow.querySelector('[data-open]')
 
     input.addEventListener('input', function (e) {
         let val = e.target.value;
@@ -63,7 +63,7 @@ function autocomplete(el, options) {
             if (optionLabel.substring(0, val.length).toUpperCase() === val.toUpperCase()) {
                 items = document.createElement('div');
 
-                items.innerHTML = itemTemplate(optionLabel, val.length)
+                items.innerHTML = itemTemplate(optionLabel, optionUrl, val.length)
 
                 items.addEventListener('click', function (e) {
                     input.value = this.getElementsByTagName('input')[0].value;
@@ -117,23 +117,25 @@ function autocomplete(el, options) {
 
         list.setAttribute('id', '' + 'autocomplete-list');
         list.setAttribute('class', 'autocomplete-items');
-        shadow.querySelector('.autocomplete').appendChild(list);
+        shadow.querySelector('[data-autocomplete]').appendChild(list);
 
         for (i = 0; i < options.length; i++) {
             const optionLabel = options[i].label
             const optionUrl = options[i].url
 
             items = document.createElement('div');
-            items.innerHTML = itemTemplate(optionLabel, optionLabel.length)
+            items.innerHTML = itemTemplate(optionLabel, optionUrl, optionLabel.length)
 
             list.appendChild(items);
         }
     }
 
-    function itemTemplate(optionLabel, length) {
+    function itemTemplate(label, url, length) {
         return `
-            <strong>${optionLabel.substring(0, length)}</strong>${optionLabel.substring(length)}
-            <input type='hidden' value='${optionLabel}'>
+            <a class="autocomplete-link" href=${url}>
+                <strong>${label.substring(0, length)}</strong>${label.substring(length)}
+            </a>
+            <input type='hidden' value='${label}'>
         `;
     }
 
