@@ -94,37 +94,41 @@ function autocomplete(el, options) {
         }
     });
 
+    let open = false
     openButton.addEventListener('click', (e) => {
         e.preventDefault()
+        if (!open) {
+            toggleAllOptions()
+        } else {
+            closeAllLists()
+        }
 
-        let val = e.target.value;
+        open = !open
+    })
+
+
+    function toggleAllOptions() {
         let list = document.createElement('div');
         let items = document.createElement('div');
 
         closeAllLists();
 
-        if (!val) return false;
-
         currentFocus = -1;
+
+        list.setAttribute('id', '' + 'autocomplete-list');
+        list.setAttribute('class', 'autocomplete-items');
+        shadow.querySelector('.autocomplete').appendChild(list);
 
         for (i = 0; i < options.length; i++) {
             const optionLabel = options[i].label
             const optionUrl = options[i].url
 
             items = document.createElement('div');
-
-            items.innerHTML = itemTemplate(optionLabel, val.length)
-
-            items.addEventListener('click', function (e) {
-                input.value = this.getElementsByTagName('input')[0].value;
-                closeAllLists();
-            });
+            items.innerHTML = itemTemplate(optionLabel, optionLabel.length)
 
             list.appendChild(items);
         }
-
-        console.log(list.innerHTML)
-    })
+    }
 
     function itemTemplate(optionLabel, length) {
         return `
